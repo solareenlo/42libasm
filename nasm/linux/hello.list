@@ -1,0 +1,18 @@
+     1                                  section	.data
+     2 00000000 68656C6C6F2C20776F-     message:	db 'hello, world!', 10
+     2 00000009 726C64210A         
+     3                                  
+     4                                  section	.text
+     5                                  global	_start
+     6                                  
+     7                                  _start:
+     8 00000000 B801000000              	mov rax, 1
+     9 00000005 BF01000000              	mov rdi, 1
+    10 0000000A 48BE-                   	mov rsi, message
+    10 0000000C [0000000000000000] 
+    11 00000014 BA0E000000              	mov rdx, 14
+    12 00000019 0F05                    	syscall
+    13                                  
+    14 0000001B B83C000000              	mov rax, 60
+    15 00000020 4831FF                  	xor rdi, rdi
+    16 00000023 0F05                    	syscall
