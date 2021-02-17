@@ -1,2 +1,2 @@
 #!/bin/bash
-nasm -f macho64 $1.asm -l $1.list && ld -s -o $1 $1.o
+nasm -f macho64 $1.asm -l $1.list && gcc -o $1 $1.o
