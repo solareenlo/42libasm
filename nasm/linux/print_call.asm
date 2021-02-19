@@ -4,19 +4,22 @@ codes:			db	   		'0123456789ABCDEF'
 
 				section		.text
 				global		_start
-print_newline:	mov			rax, 1
+print_newline:
+				mov			rax, 1
 				mov			rdi, 1
 				mov			rsi, newline_char
 				mov			rdx, 1
 				syscall
 				ret
 
-print_hex:		mov			rax, 1
+print_hex:
+				mov			rax, rdi
 				mov			rdi, 1
 				mov			rdx, 1
 				mov			rcx, 64
 
-iterate:		push		rax
+iterate:
+				push		rax
 				sub			rcx, 4
 				sar			rax, cl
 				and			rax, 0xf
@@ -30,12 +33,15 @@ iterate:		push		rax
 				jnz			iterate
 				ret
 
-_start:			mov			rax, 0x1A2B3C4D5E6F7A8B
+_start:
+				mov			rax, 0x1A2B3C4D5E6F7A8B
 				mov			rdi, 1			; rdi = 1
 				mov			rdx, 1			; rdx = 1
 				mov			rcx, 64			; rcx = 64
 				call		iterate
 				call		print_newline
+
+				mov			rdi, 0x1122334455667788
 				call		print_hex
 				call		print_newline
 
