@@ -14,18 +14,17 @@ print_newline:
 
 print_hex:
 				mov			rax, rdi
-				mov			rdi, 1
-				mov			rdx, 1
 				mov			rcx, 64
-
 iterate:
 				push		rax
 				sub			rcx, 4
 				sar			rax, cl
 				and			rax, 0xf
-				lea			rsi, [codes + rax]
-				mov			rax, 1
+				lea			rsi, [codes + rax]	; string address
+				mov			rax, 1				; 'write' syscall number
 				push		rcx
+				mov			rdi, 1				; stdout descriptor
+				mov			rdx, 1				; string length in bytes
 				syscall
 				pop			rcx
 				pop			rax
@@ -35,9 +34,9 @@ iterate:
 
 _start:
 				mov			rax, 0x1A2B3C4D5E6F7A8B
-				mov			rdi, 1			; rdi = 1
-				mov			rdx, 1			; rdx = 1
-				mov			rcx, 64			; rcx = 64
+				mov			rdi, 1				; rdi = 1
+				mov			rdx, 1				; rdx = 1
+				mov			rcx, 64				; rcx = 64
 				call		iterate
 				call		print_newline
 
