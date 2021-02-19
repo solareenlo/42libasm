@@ -24,6 +24,16 @@
 |      lea     | 実行アドレスの値そのものをレジスタに設定する       |
 |     move     | 実行アドレスの内容をレジスタまたはメモリに書き込む |
 
+## Directive
+### db, dw, dd, dq
+
+| Directive | Description                    |
+|:---------:|--------------------------------|
+| db        | bytes                          |
+| dw        | words, equal to 2 bytes each   |
+| dd        | double words, equal to 4 bytes |
+| dq        | quad words, equal to 8 bytes   |
+
 ## Register
 
 | Name     | Onother Name | Description                              |
@@ -51,10 +61,10 @@
 - 関数のリターン値は，rax に入ってる．
 
 ### callee-saved register & caller-saved register
-- callee-saved register (呼び出し先退避レジスタ)
+- Callee-saved register (呼び出し先退避レジスタ)
   - rbx, rbp, rsp, r12, r13, r14, r15
   - 呼び出された関数自身が退避/復旧するレジスタ．
-- caller-saved register (呼び出し元退避レジスタ)
+- Caller-saved register (呼び出し元退避レジスタ)
   - rax, rcx, rdx, rsi, rdi, r8, r9, r10, r11
   - 関数を呼び出す側，呼び出し前に退避し，呼び出し後に復旧するレジスタ．
 
