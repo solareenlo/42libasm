@@ -5,6 +5,7 @@ exit:
 	mov		rax, 60
 	syscall
 
+
 string_length:
 	xor		rax, rax
 .loop:
@@ -14,6 +15,7 @@ string_length:
 	jmp		.loop
 .end:
 	ret
+
 
 print_string:
 	push	rdi
@@ -32,6 +34,7 @@ print_char:
 	call	print_string
 	pop		rdi
 	ret
+
 
 print_newline:
 	mov		rdi, 0xA
@@ -70,6 +73,7 @@ print_int:
 	jmp		print_uint
 	ret
 
+
 string_equals:
 	mov		al, byte[rdi]
 	cmp		al, byte[rsi]
@@ -94,6 +98,7 @@ read_char:
 	syscall
 	pop		rax
 	ret
+
 
 read_word:
 	push	r14
@@ -178,6 +183,7 @@ parse_uint:
 	mov		rdx, rcx
 	ret
 
+
 ; rdi points to a string
 ; returns rax: number, rdx : length
 parse_int:
@@ -211,7 +217,6 @@ string_copy:
 	jae		.too_long
 
 	push	rsi
-
 .loop:
 	mov		dl, byte[rdi]
 	mov		byte[rsi], dl
@@ -222,7 +227,6 @@ string_copy:
 
 	pop		rax
 	ret
-
 .too_long:
 	xor		rax, rax
 	ret
