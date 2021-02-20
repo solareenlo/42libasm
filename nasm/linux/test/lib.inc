@@ -1,19 +1,19 @@
 section .text
 
 exit:
-	xor rdi, rdi
-	mov	rax, 60
+	xor		rdi, rdi
+	mov		rax, 60
 	syscall
 
 string_length:
-    xor rax, rax
+	xor		rax, rax
 .loop:
-    cmp byte [rdi+rax], 0
-    je .end
-    inc rax
-    jmp .loop
+	cmp		byte [rdi+rax], 0
+	je		.end
+	inc		rax
+	jmp		.loop
 .end:
-    ret
+	ret
 
 print_string:
 	push	rdi
@@ -23,21 +23,40 @@ print_string:
 	mov		rax, 1
 	mov		rdi, 1
 	syscall
-    ret
+	ret
 
 
 print_char:
-    xor rax, rax
-    ret
+	push	rdi
+	mov		rdi, rsp
+	call	print_string
+	pop		rdi
+	ret
 
 print_newline:
-    xor rax, rax
-    ret
+	mov		rdi, 0xA
+	jmp		print_char
 
 
 print_uint:
-    xor rax, rax
-    ret
+	mov		rax, rdi
+	mov		rdi, rsp
+	push	0
+	sub		rsp, 16
+	dec		rdi
+	mov		r8, 10
+.loop:
+	xor		rdx, rdx
+	div		r8
+	or		dl, 0x30
+	dec		rdi
+	mov		[rdi], dl
+	test	rax, rax
+	jnz		.loop
+
+	call	print_string
+	add		rsp, 24
+	ret
 
 
 print_int:
@@ -70,4 +89,30 @@ parse_int:
 
 
 string_copy:
-    ret
+	push	rdi
+	push	rsi
+	push	rdx
+	call	string_length
+	pop		rdx
+	pop		rsi
+	pop		rdi
+
+	cmp		rax, rdx
+	jae		.too_long
+
+	push	rsi
+
+.loop:
+	mov		dl, byte[rdi]
+	mov		byte[rsi], dl
+	inc		rdi
+	inc		rsi
+	test	dl, dl
+	jnz		.loop
+
+	pop		rax
+	ret
+
+.too_long:
+	xor		rax, rax
+	ret
