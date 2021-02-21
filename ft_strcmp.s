@@ -15,6 +15,7 @@
 _ft_strcmp:
 			mov		al, byte[rdi]
 			cmp		al, byte[rsi]
+			; jne		.no
 			jg		.g
 			jl		.l
 			inc		rdi
@@ -22,6 +23,9 @@ _ft_strcmp:
 			test	al, al
 			jnz		_ft_strcmp
 			xor		rax, rax
+			ret
+.no:
+			sub		rax, rbx
 			ret
 .l:
 			mov		rax, -1

@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/22 00:31:01 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/22 00:42:13 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	check_ft_strcmp(char *s1, char *s2)
 	if (strcmp(s1, s2) == ft_strcmp(s1, s2))
 		printf("\033[32mOK\033[0m [%s] [%s]\n", s1, s2);
 	else
+	{
 		printf("\033[31mNG\033[0m [%s] [%s]\n", s1, s2);
+		printf("%d %d\n", strcmp(s1, s2), ft_strcmp(s1, s2));
+	}
 }
 
 void	test_ft_strcpy(void)
