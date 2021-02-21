@@ -21,6 +21,11 @@
 
 Reference: [x86 Assembly/Interfacing with Linux](https://en.wikibooks.org/wiki/X86_Assembly/Interfacing_with_Linux)
 
+### 一般的な関数の引数と register との位置関係
+
+| 1st para | 2nd para | 3rd para | 4th para | 5th para | 6th para | それ以降     |
+|----------|----------|----------|----------|----------|----------|--------------|
+| rdi      | rsi      | rdx      | rcx      | r8       | r9       | 逆順に stack |
 
 ## Addressing
 ```asm
@@ -82,7 +87,7 @@ mov rax, [rdx + 8*rcx + 42]
 ### system call
 1. rax register にシステムコールの番号を入れる．
 2. 引数は，以下のレジスタに入れる．
-    - rdi, rsi, rbx, r8, r9, r10
+    - rdi, rsi, rbx, r10, r8, r9
     - システムコールは 6 個を超える引数を受け取ることはできない．
 3. system call を実行する．
 - レジスタを初期化する順序は問わない．
