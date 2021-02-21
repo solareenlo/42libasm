@@ -6,26 +6,28 @@
 - mac は，syscall_sw.h で，syscall number を6種類のバージョンへと使い分けている．
   - Reference: [syscall_sw.h](https://opensource.apple.com/source/xnu/xnu-4570.1.46/osfmk/mach/i386/syscall_sw.h.auto.html)
 
-## 引数と register との位置関係
+## Register
 ### syscall の引数と register との位置関係
 
 | syscall num | 1st para | 2nd para | 3rd para | 4th para | 5th para | 6th para | result |
 |-------------|----------|----------|----------|----------|----------|----------|--------|
 | rax         | rdi      | rsi      | rdx      | r10      | r8       | r9       | rax    |
 
-### libc の引数と retister との位置関係
+### 一般的な関数の引数と register との位置関係
 
-| 1st para | 2nd para | 3rd para | 4th para | 5th para | 6th para |
-|----------|----------|----------|----------|----------|----------|
-| rdi      | rsi      | rdx      | rcx      | r8       | r9       |
+| 1st para | 2nd para | 3rd para | 4th para | 5th para | 6th para | それ以降     | result |
+|----------|----------|----------|----------|----------|----------|--------------|--------|
+| rdi      | rsi      | rdx      | rcx      | r8       | r9       | 逆順に stack | rax    |
 
 Reference: [x86 Assembly/Interfacing with Linux](https://en.wikibooks.org/wiki/X86_Assembly/Interfacing_with_Linux)
 
-### 一般的な関数の引数と register との位置関係
-
-| 1st para | 2nd para | 3rd para | 4th para | 5th para | 6th para | それ以降     |
-|----------|----------|----------|----------|----------|----------|--------------|
-| rdi      | rsi      | rdx      | rcx      | r8       | r9       | 逆順に stack |
+### callee-saved register & caller-saved register
+- Callee-saved register (呼び出し先退避レジスタ)
+  - rbx, rbp, rsp, r12, r13, r14, r15
+  - 呼び出された関数自身が退避/復旧するレジスタ．
+- Caller-saved register (呼び出し元退避レジスタ)
+  - rax, rcx, rdx, rsi, rdi, r8, r9, r10, r11
+  - 関数を呼び出す側，呼び出し前に退避し，呼び出し後に復旧するレジスタ．
 
 ## Addressing
 ```asm
@@ -94,12 +96,4 @@ mov rax, [rdx + 8*rcx + 42]
 - システムコール命令は，rcx と r11 の値を書き換える．
   - 理由は，後ほど．
 - 関数のリターン値は，rax に入ってる．
-
-### callee-saved register & caller-saved register
-- Callee-saved register (呼び出し先退避レジスタ)
-  - rbx, rbp, rsp, r12, r13, r14, r15
-  - 呼び出された関数自身が退避/復旧するレジスタ．
-- Caller-saved register (呼び出し元退避レジスタ)
-  - rax, rcx, rdx, rsi, rdi, r8, r9, r10, r11
-  - 関数を呼び出す側，呼び出し前に退避し，呼び出し後に復旧するレジスタ．
 
