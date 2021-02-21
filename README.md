@@ -1,5 +1,27 @@
 # libasm
 
+## syscall number
+- sys/syscall.h に記載されている．
+  - References: [syscall.h](https://opensource.apple.com/source/xnu/xnu-792/bsd/sys/syscall.h.auto.html), [x86 Linux の 32bit と 64bit のシステムコールの違い](https://www.mztn.org/lxasm64/x86_x64_table.html)
+- mac は，syscall_sw.h で，syscall number を6種類のバージョンへと使い分けている．
+  - Reference: [syscall_sw.h](https://opensource.apple.com/source/xnu/xnu-4570.1.46/osfmk/mach/i386/syscall_sw.h.auto.html)
+
+## 引数と register との位置関係
+### syscall の引数と register との位置関係
+
+| syscall num | 1st para | 2nd para | 3rd para | 4th para | 5th para | 6th para | result |
+|-------------|----------|----------|----------|----------|----------|----------|--------|
+| rax         | rdi      | rsi      | rdx      | r10      | r8       | r9       | rax    |
+
+### libc の引数と retister との位置関係
+
+| 1st para | 2nd para | 3rd para | 4th para | 5th para | 6th para |
+|----------|----------|----------|----------|----------|----------|
+| rdi      | rsi      | rdx      | rcx      | r8       | r9       |
+
+Reference: [x86 Assembly/Interfacing with Linux](https://en.wikibooks.org/wiki/X86_Assembly/Interfacing_with_Linux)
+
+
 ## Addressing
 ```asm
 base + scale * offset + displacement
