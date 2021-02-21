@@ -1,8 +1,8 @@
-# Makefile for libasm, updated Sun Feb 21 14:35:20 JST 2021
+# Makefile for libasm, updated Sun Feb 21 16:55:39 JST 2021
 
-SRC := ft_strlen.s
+SRC := ft_strcpy.s ft_strlen.s
 
-OBJ := ft_strlen.o
+OBJ := ft_strcpy.o ft_strlen.o
 
 HDR := libasm.h
 
