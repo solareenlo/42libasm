@@ -35,7 +35,7 @@ fclean: clean
 
 re: fclean all
 
-test:
+test: all
 	$(CC) $(NAME) main.c
 	./a.out
 
