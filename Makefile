@@ -10,11 +10,12 @@ HDR := libasm.h
 
 NAME := libasm.a
 
+CC := gcc -g -fsanitize=address
 AR := ar -rcs
 NASM := nasm -fmacho64
 RM := rm -fr
 
-.PHONY:	all clean fclean re source
+.PHONY:	all clean fclean re source test
 
 all: $(NAME)
 
@@ -31,6 +32,10 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+
+test:
+	$(CC) $(NAME) main.c
+	./a.out
 
 source:
 	@mv Makefile Makefile.bak
