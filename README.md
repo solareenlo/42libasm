@@ -1,5 +1,13 @@
 # libasm
 
+## Addressing
+```asm
+base + scale * offset + displacement
+mov rax, [rdx + 8*rcx + 42]
+```
+- displacement: immediate value
+- scale: 1, 2, 4 or 8
+
 ## Instruction
 ### shr, sar
 
