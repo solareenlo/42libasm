@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/21 21:53:12 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/22 00:31:01 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	test_ft_strlen(void);
 void	check_ft_strlen(char *s);
 void	test_ft_strcpy(void);
 void	check_ft_strcpy(char *src);
+void	test_ft_strcmp(void);
+void	check_ft_strcmp(char *s1, char *s2);
 
 int		main(void)
 {
@@ -28,7 +30,27 @@ int		main(void)
 	write(1, "\n", 1);
 	test_ft_strcpy();
 	write(1, "\n", 1);
+	test_ft_strcmp();
+	write(1, "\n", 1);
 	return (0);
+}
+
+void	test_ft_strcmp(void)
+{
+	printf("Check ft_strcmp\n");
+	check_ft_strcmp("hello", "hello");
+	check_ft_strcmp("hello", "hellO");
+	check_ft_strcmp("hellO", "hello");
+	check_ft_strcmp(" ", "  ");
+	check_ft_strcmp("  ", " ");
+}
+
+void	check_ft_strcmp(char *s1, char *s2)
+{
+	if (strcmp(s1, s2) == ft_strcmp(s1, s2))
+		printf("\033[32mOK\033[0m [%s] [%s]\n", s1, s2);
+	else
+		printf("\033[31mNG\033[0m [%s] [%s]\n", s1, s2);
 }
 
 void	test_ft_strcpy(void)
