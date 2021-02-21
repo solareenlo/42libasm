@@ -23,3 +23,5 @@
 *.list
 *.dSYM
 libasm_test
+42libasm_tester
+mlibasm_tester
