@@ -13,6 +13,7 @@
 			global	_ft_strcpy
 			section	.text
 _ft_strcpy:
+			push	rdi
 .loop:
 			mov		dl, byte[rsi]
 			mov		byte[rdi], dl
@@ -20,4 +21,6 @@ _ft_strcpy:
 			inc		rsi
 			test	dl, dl
 			jnz		.loop
+			mov		byte[rdi], 0
+			pop		rax
 			ret
