@@ -15,12 +15,12 @@
 _ft_strcpy:
 			push	rdi
 .loop:
-			mov		dl, byte[rsi]
-			mov		byte[rdi], dl
+			mov		dl, byte [rsi]
+			mov		byte [rdi], dl
 			inc		rdi
 			inc		rsi
 			test	dl, dl
 			jnz		.loop
-			mov		byte[rdi], 0
+			mov		byte [rdi], 0
 			pop		rax
 			ret

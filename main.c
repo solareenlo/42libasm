@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/22 00:42:13 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/22 02:51:31 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	test_ft_strcmp(void)
 {
 	printf("Check ft_strcmp\n");
 	check_ft_strcmp("hello", "hello");
+	check_ft_strcmp("hello", "hello!");
 	check_ft_strcmp("hello", "hellO");
 	check_ft_strcmp("hellO", "hello");
 	check_ft_strcmp(" ", "  ");
