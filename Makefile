@@ -1,8 +1,8 @@
-# Makefile for libasm, updated Mon Feb 22 01:47:44 JST 2021
+# Makefile for libasm, updated Mon Feb 22 16:08:46 JST 2021
 
-SRC := ft_read.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_strlen.s ft_write.s
+SRC := ft_list_size.s ft_read.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_strlen.s ft_write.s
 
-OBJ := ft_read.o ft_strcmp.o ft_strcpy.o ft_strdup.o ft_strlen.o ft_write.o
+OBJ := ft_list_size.o ft_read.o ft_strcmp.o ft_strcpy.o ft_strdup.o ft_strlen.o ft_write.o
 
 HDR := libasm.h
 
@@ -15,7 +15,7 @@ AR := ar -rcs
 NASM := nasm -fmacho64
 RM := rm -fr
 
-.PHONY:	all clean fclean re source test
+.PHONY:	all clean fclean re source test bonus
 
 all: $(NAME)
 
@@ -38,6 +38,8 @@ re: fclean all
 test: all
 	$(CC) $(NAME) main.c
 	./a.out
+
+bonus: all
 
 source:
 	@mv Makefile Makefile.bak
