@@ -32,7 +32,7 @@ $(NAME): $(OBJ)
 	$(AR) $@ $^
 
 clean:
-	$(RM) Makefile.bak $(OBJ)
+	$(RM) Makefile.bak $(OBJ) a.out
 
 fclean: clean
 	$(RM) $(NAME)
@@ -40,7 +40,7 @@ fclean: clean
 re: fclean all
 
 test: re
-	$(CC) $(NAME) main.c
+	$(CC) main.c $(NAME)
 	./a.out
 
 bonus: all
