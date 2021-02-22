@@ -1,5 +1,8 @@
 # libasm
 
+## 大文字と小文字の区別
+- label と section は大文字と小文字を区別する．
+
 ## Syscall
 ### syscall rapper
 - errno.h に errno の一覧がある．
@@ -35,6 +38,9 @@ Reference: [x86 Assembly/Interfacing with Linux](https://en.wikibooks.org/wiki/X
 - Caller-saved register (呼び出し元退避レジスタ)
   - rax, rcx, rdx, rsi, rdi, r8, r9, r10, r11
   - 関数を呼び出す側，呼び出し前に退避し，呼び出し後に復旧するレジスタ．
+
+### References
+- [条件ジャンプとフラグ, フラグレジスタの内容](http://wisdom.sakura.ne.jp/programming/asm/assembly13.html)
 
 ## Addressing
 ```asm
