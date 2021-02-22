@@ -10,17 +10,27 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-			global	_ft_read
+%ifdef MACOS
+	%define FT_READ		_ft_read
+	%define ERROR		___error
+	%define READ		0x02000003
+%else
+	%define	FT_READ		ft_read
+	%define ERROR		__errno_location
+	%define READ		3
+%endif
+
+			global	FT_READ
 			section	.text
-			extern	___error
-_ft_read:
-			mov		rax, 0x02000003
+			extern	ERROR
+FT_READ:
+			mov		rax, READ
 			syscall
 			jc		.error
 			ret
 .error:
 			push	rax
-			call	___error
+			call	ERROR
 			pop		qword [rax]
 			mov		rax, -1
 			ret

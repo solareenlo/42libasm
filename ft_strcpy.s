@@ -10,9 +10,15 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-			global	_ft_strcpy
+%ifdef MACOS
+	%define FT_STRCPY	_ft_strcpy
+%else
+	%define	FT_STRCPY	ft_strcpy
+%endif
+
+			global	FT_STRCPY
 			section	.text
-_ft_strcpy:
+FT_STRCPY:
 			push	rdi
 .loop:
 			mov		dl, byte [rsi]

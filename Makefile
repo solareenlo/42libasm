@@ -10,10 +10,14 @@ HDR := libasm.h
 
 NAME := libasm.a
 
-CC := gcc -g -fsanitize=address
+CC := gcc -Wall -Wextra -Werror -g -fsanitize=address
 AR := ar -rcs
-NASM := nasm -fmacho64
 RM := rm -fr
+ifeq ($(shell uname), Darwin)
+	NASM := nasm -fmacho64 -DMACOS
+else
+	NASM := nasm -felf64
+endif
 
 .PHONY:	all clean fclean re source test bonus
 
@@ -35,7 +39,7 @@ fclean: clean
 
 re: fclean all
 
-test: all
+test: re
 	$(CC) $(NAME) main.c
 	./a.out
 

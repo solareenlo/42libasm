@@ -12,9 +12,15 @@
 
 ; int ft_list_size(t_list *begin_list);
 
-			global	_ft_list_size
+%ifdef MACOS
+	%define FT_LIST_SIZE	_ft_list_size
+%else
+	%define	FT_LIST_SIZE	ft_list_size
+%endif
+
+			global	FT_LIST_SIZE
 			section	.text
-_ft_list_size:
+FT_LIST_SIZE:
 			xor		rax, rax
 .loop:
 			cmp		rdi, 0
@@ -22,5 +28,5 @@ _ft_list_size:
 			mov		rdi, [rdi + 8]
 			inc		rax
 			jmp		.loop
-.end
+.end:
 			ret

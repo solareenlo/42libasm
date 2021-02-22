@@ -10,9 +10,15 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-			global	_ft_strlen
+%ifdef MACOS
+	%define FT_STRLEN	_ft_strlen
+%else
+	%define	FT_STRLEN	ft_strlen
+%endif
+
+			global	FT_STRLEN
 			section	.text
-_ft_strlen:
+FT_STRLEN:
 			xor		rax, rax
 .loop:
 			cmp		byte [rdi + rax], 0

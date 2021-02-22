@@ -10,17 +10,27 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-			global	_ft_write
+%ifdef MACOS
+	%define FT_WRITE	_ft_write
+	%define WRITE		0x02000004
+	%define ERROR		___error
+%else
+	%define	FT_WRITE	ft_write
+	%define WRITE		1
+	%define ERROR		__errno_location
+%endif
+
+			global	FT_WRITE
 			section	.text
-			extern	___error
-_ft_write:
-			mov		rax, 0x02000004
+			extern	ERROR
+FT_WRITE:
+			mov		rax, WRITE
 			syscall
 			jc		.error
 			ret
 .error:
 			push	rax
-			call	___error
+			call	ERROR
 			pop		qword [rax]
 			mov		rax, -1
 			ret

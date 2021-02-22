@@ -10,23 +10,35 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-			global	_ft_strdup
-			extern	_ft_strlen
-			extern	_ft_strcpy
-			extern	_malloc
+%ifdef MACOS
+	%define FT_STRDUP	_ft_strdup
+	%define FT_STRCPY	_ft_strcpy
+	%define FT_STRLEN	_ft_strlen
+	%define MALLOC		_malloc
+%else
+	%define	FT_STRDUP	ft_strdup
+	%define	FT_STRCPY	ft_strcpy
+	%define	FT_STRLEN	ft_strlen
+	%define MALLOC		malloc
+%endif
+
+			global	FT_STRDUP
+			extern	FT_STRLEN
+			extern	FT_STRCPY
+			extern	MALLOC
 			extern	___error
 			section	.text
-_ft_strdup:
-			call	_ft_strlen
+FT_STRDUP:
+			call	FT_STRLEN
 			inc		rax
 			push	rdi
 			mov		rdi, rax
-			call	_malloc
+			call	MALLOC
 			test	rax, rax
 			jz		.error
 			pop		rsi
 			mov		rdi, rax
-			call	_ft_strcpy
+			call	FT_STRCPY
 			ret
 .error:
 			pop		rdi

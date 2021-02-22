@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/22 17:33:01 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/22 19:20:40 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string.h>
 #include <assert.h>
 #include <unistd.h>
+#include <errno.h>
 #include "libasm.h"
 
 void	test_ft_strlen(void);
@@ -23,6 +24,7 @@ void	test_ft_strcpy(void);
 void	check_ft_strcpy(char *src);
 void	test_ft_strcmp(void);
 void	check_ft_strcmp(char *s1, char *s2);
+void	test_ft_write(void);
 char	*long_char(size_t size, char c);
 
 int		main(void)
@@ -30,7 +32,19 @@ int		main(void)
 	test_ft_strlen();
 	test_ft_strcpy();
 	test_ft_strcmp();
+	test_ft_write();
 	return (0);
+}
+
+void	test_ft_write(void)
+{
+	printf("\033[32m[Check ft_write]\033[0m\n");
+	errno = 0;
+	printf("%lu %d\n", write(0, "abc ", 5), errno);
+	printf("%lu %d\n", write(1, "abc ", 5), errno);
+	printf("%lu %d\n", write(2, "abc ", 5), errno);
+	printf("%lu %d\n", write(3, "abc ", 5), errno);
+	printf("%lu %d\n", write(1, "abc ", 5), errno);
 }
 
 void	test_ft_strcmp(void)
@@ -47,6 +61,7 @@ void	test_ft_strcmp(void)
 	check_ft_strcmp("", "");
 	check_ft_strcmp("\n", "\n");
 	check_ft_strcmp("\0a\0", "\0a\0");
+	check_ft_strcmp("aaa", "a\0a\0a");
 	check_ft_strcmp("!@#$%^&*()_+|~QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>?", "!@#$%^&*()_+|~QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>?");
 	s = long_char(100, 'C');
 	check_ft_strcmp(s, "a");
@@ -81,10 +96,7 @@ void	test_ft_strcpy(void)
 	check_ft_strcpy("a\0b\0c\0");
 	check_ft_strcpy("!@#$%^&*()_+|~QWERTYUIOP{}ASDFGHJKL:ZXCVBNM<>?");
 	check_ft_strcpy(":\"A");
-	check_ft_strcpy("\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	check_ft_strcpy("\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	check_ft_strcpy("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-	check_ft_strcpy("\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 	check_ft_strcpy("!@#$%^&*()_+|~\"QWERTYUIOP{}ASDFGHJKL:ZXCVBNM<>?");
 	check_ft_strcpy("!@#$%^&*()_+|~\"QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>?");
 	check_ft_strcpy("\'\'\'\'\'\'\'\'");
@@ -110,8 +122,8 @@ void	check_ft_strcpy(char *src)
 		dprintf(2, "malloc failed\n");
 		exit(1);
 	}
-	ft_strcpy(dst1, src);
-	strcpy(dst2, src);
+	strcpy(dst1, src);
+	ft_strcpy(dst2, src);
 	if (strcmp(dst1, dst2) == 0 && strcmp(src, dst1) == 0 && strcmp(src, dst2) == 0)
 		printf("\033[32mOK\033[0m [%s]\n", src);
 	else

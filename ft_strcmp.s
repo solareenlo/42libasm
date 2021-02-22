@@ -10,16 +10,22 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
-			global	_ft_strcmp
+%ifdef MACOS
+	%define FT_STRCMP	_ft_strcmp
+%else
+	%define	FT_STRCMP	ft_strcmp
+%endif
+
+			global	FT_STRCMP
 			section	.text
-_ft_strcmp:
+FT_STRCMP:
 			mov		al, byte [rdi]
 			cmp		al, byte [rsi]
 			jne		.no
 			inc		rdi
 			inc		rsi
 			test	al, al
-			jnz		_ft_strcmp
+			jnz		FT_STRCMP
 			xor		rax, rax
 			ret
 .no:
