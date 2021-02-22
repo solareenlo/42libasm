@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/22 19:20:40 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/22 20:48:24 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 #include <unistd.h>
 #include <errno.h>
 #include "libasm.h"
+
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
 
 void	test_ft_strlen(void);
 void	check_ft_strlen(char *s);
@@ -38,8 +42,9 @@ int		main(void)
 
 void	test_ft_write(void)
 {
-	printf("\033[32m[Check ft_write]\033[0m\n");
+	printf("%sCheck%s ft_write\n", GREEN, RESET);
 	errno = 0;
+	printf("%lu %d\n", write(-1, "abc ", 5), errno);
 	printf("%lu %d\n", write(0, "abc ", 5), errno);
 	printf("%lu %d\n", write(1, "abc ", 5), errno);
 	printf("%lu %d\n", write(2, "abc ", 5), errno);
@@ -51,7 +56,7 @@ void	test_ft_strcmp(void)
 {
 	char	*s;
 
-	printf("Check ft_strcmp\n");
+	printf("%sCheck%s ft_strcmp\n", GREEN, RESET);
 	check_ft_strcmp("hello", "hello");
 	check_ft_strcmp("hello", "hello!");
 	check_ft_strcmp("hello", "hellO");
@@ -73,10 +78,10 @@ void	test_ft_strcmp(void)
 void	check_ft_strcmp(char *s1, char *s2)
 {
 	if (strcmp(s1, s2) == ft_strcmp(s1, s2))
-		printf("\033[32mOK\033[0m [%s] [%s]\n", s1, s2);
+		printf("%sOK%s [%s] [%s]\n", GREEN, RESET, s1, s2);
 	else
 	{
-		printf("\033[31mNG\033[0m [%s] [%s]", s1, s2);
+		printf("%sNG%s [%s] [%s]", RED, RESET, s1, s2);
 		printf(" %d %d\n", strcmp(s1, s2), ft_strcmp(s1, s2));
 	}
 }
@@ -85,7 +90,7 @@ void	test_ft_strcpy(void)
 {
 	char	*s;
 
-	printf("Check ft_strcpy\n");
+	printf("%sCheck%s ft_strcpy\n", GREEN, RESET);
 	check_ft_strcpy("hello world");
 	check_ft_strcpy("");
 	check_ft_strcpy("          ");
@@ -125,9 +130,9 @@ void	check_ft_strcpy(char *src)
 	strcpy(dst1, src);
 	ft_strcpy(dst2, src);
 	if (strcmp(dst1, dst2) == 0 && strcmp(src, dst1) == 0 && strcmp(src, dst2) == 0)
-		printf("\033[32mOK\033[0m [%s]\n", src);
+		printf("%sOK%s [%s]\n", GREEN, RESET, src);
 	else
-		printf("\033[31mNG\033[0m [%s]\n", src);
+		printf("%sNG%s [%s]\n", RED, RESET, src);
 	free(dst1);
 	free(dst2);
 }
@@ -136,7 +141,7 @@ void	test_ft_strlen(void)
 {
 	char	*s;
 
-	printf("Check ft_strlen\n");
+	printf("%sCheck%s ft_strlen\n", GREEN, RESET);
 	check_ft_strlen("hello world");
 	check_ft_strlen("");
 	check_ft_strlen(" ");
@@ -154,9 +159,9 @@ void	test_ft_strlen(void)
 void	check_ft_strlen(char *s)
 {
 	if (strlen(s) == ft_strlen(s))
-		printf("\033[32mOK\033[0m [%s]\n", s);
+		printf("%sOK%s [%s]\n", GREEN, RESET, s);
 	else
-		printf("\033[31mNG\033[0m [%s]\n", s);
+		printf("%sNG%s [%s]\n", RED, RESET, s);
 }
 
 char	*long_char(size_t size, char c)

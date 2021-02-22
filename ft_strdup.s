@@ -26,7 +26,6 @@
 			extern	FT_STRLEN
 			extern	FT_STRCPY
 			extern	MALLOC
-			extern	___error
 			section	.text
 FT_STRDUP:
 			call	FT_STRLEN
