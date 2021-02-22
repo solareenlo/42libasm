@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/23 04:12:41 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/23 05:00:38 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	test_ft_write(void);
 void	check_ft_write(int fd, const void *buf, size_t n);
 void	test_ft_read(void);
 void	check_ft_read(char *filename, size_t n);
+void	test_ft_strdup(void);
+void	check_ft_strdup(char *s);
 char	*long_char(size_t size, char c);
 
 int		main(void)
@@ -42,7 +44,39 @@ int		main(void)
 	test_ft_strcmp();
 	test_ft_write();
 	test_ft_read();
+	test_ft_strdup();
 	return (0);
+}
+
+void	test_ft_strdup(void)
+{
+	printf("%sCheck%s ft_strdup\n", GREEN, RESET);
+	check_ft_strdup("hello world");
+	check_ft_strdup("");
+	check_ft_strdup("     ");
+	check_ft_strdup("\0\0\0");
+	check_ft_strdup("\0a\0");
+	check_ft_strdup("a\0a\0");
+}
+
+void	check_ft_strdup(char *s)
+{
+	char	*dup[2];
+	int		errnum[2];
+
+	errno = 0;
+	dup[0] = strdup(s);
+	errnum[0] = errno;
+	errno = 0;
+	dup[1] = ft_strdup(s);
+	errnum[1] = errno;
+	if (strcmp(dup[0], dup[1]) == 0 && errnum[0] == errnum[1]
+			&& strcmp(dup[0], s) == 0)
+		printf("%sOK%s [%s] [%d]\n", GREEN, RESET, s, errnum[0]);
+	else
+		printf("%sNG%s [%s] [%d]\n", RED, RESET, s, errnum[0]);
+	free(dup[0]);
+	free(dup[1]);
 }
 
 void	test_ft_read(void)
@@ -70,26 +104,26 @@ void	check_ft_read(char *filename, size_t n)
 {
 	char	buf[2][1024];
 	int		fd;
-	int		ft_errno[2];
+	int		errnum[2];
 	ssize_t	ret[2];
 
 	bzero(buf, sizeof(buf));
 	fd = open(filename, O_RDONLY);
 	errno = 0;
 	ret[1] = ft_read(fd, buf[1], n);
-	ft_errno[1] = errno;
+	errnum[1] = errno;
 	close(fd);
 	fd = open(filename, O_RDONLY);
 	errno = 0;
 	ret[0] = read(fd, buf[0], n);
-	ft_errno[0] = errno;
+	errnum[0] = errno;
 	close(fd);
-	if (ret[0] == ret[1] && ft_errno[0] == ft_errno[1] && strcmp(buf[0], buf[1]) == 0)
+	if (ret[0] == ret[1] && errnum[0] == errnum[1] && strcmp(buf[0], buf[1]) == 0)
 		printf("%sOK%s [%s] [%s] [%lu] [%lu] [%d]\n",
-				GREEN, RESET, filename, buf[0], n, ret[0], ft_errno[0]);
+				GREEN, RESET, filename, buf[0], n, ret[0], errnum[0]);
 	else
 		printf("%sNG%s [%s] [%s] [%lu] [%lu] [%d]\n",
-				RED, RESET, filename, buf[0], n, ret[0], ft_errno[1]);
+				RED, RESET, filename, buf[0], n, ret[0], errnum[1]);
 }
 
 void	test_ft_write(void)
