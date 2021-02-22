@@ -10,7 +10,8 @@ HDR := libasm.h
 
 NAME := libasm.a
 
-CC := gcc -Wall -Wextra -Werror -g -fsanitize=address
+CC := gcc -g -fsanitize=address
+# CC += -Wall -Wextra -Werror
 AR := ar -rcs
 RM := rm -fr
 ifeq ($(shell uname), Darwin)

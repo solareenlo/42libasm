@@ -6,15 +6,15 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/22 20:48:24 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/23 01:17:56 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <assert.h>
 #include <unistd.h>
+#include <limits.h>
 #include <errno.h>
 #include "libasm.h"
 
@@ -29,6 +29,7 @@ void	check_ft_strcpy(char *src);
 void	test_ft_strcmp(void);
 void	check_ft_strcmp(char *s1, char *s2);
 void	test_ft_write(void);
+void	check_ft_write(int fd, const void *buf, size_t n);
 char	*long_char(size_t size, char c);
 
 int		main(void)
@@ -43,13 +44,32 @@ int		main(void)
 void	test_ft_write(void)
 {
 	printf("%sCheck%s ft_write\n", GREEN, RESET);
+	check_ft_write(-1, "[abc] ", 7);
+	check_ft_write(0, "[abc] ", 7);
+	check_ft_write(1, "[abc] ", 0);
+	check_ft_write(1, "[abc] ", -1);
+	check_ft_write(1, NULL, 1);
+	check_ft_write(1, NULL, -1);
+	check_ft_write(1, "[abc] ", 7);
+	check_ft_write(1, "[\0a\0] ", 7);
+	check_ft_write(1, "[\0\0\0] ", 7);
+	check_ft_write(1, "[] ", 4);
+	check_ft_write(1, "[\t] ", 5);
+	check_ft_write(1, "[\n] ", 5);
+	check_ft_write(1, "[   ] ", 7);
+	check_ft_write(2, "[abc] ", 7);
+	check_ft_write(3, "[abc] ", 7);
+	check_ft_write(INT_MAX, "[abc] ", 7);
+	check_ft_write(INT_MIN, "[abc] ", 7);
+	check_ft_write(1, long_char(100, 'A'), 100);
+}
+
+void	check_ft_write(int fd, const void *buf, size_t n)
+{
 	errno = 0;
-	printf("%lu %d\n", write(-1, "abc ", 5), errno);
-	printf("%lu %d\n", write(0, "abc ", 5), errno);
-	printf("%lu %d\n", write(1, "abc ", 5), errno);
-	printf("%lu %d\n", write(2, "abc ", 5), errno);
-	printf("%lu %d\n", write(3, "abc ", 5), errno);
-	printf("%lu %d\n", write(1, "abc ", 5), errno);
+	printf("%lu %d\n", write(fd, buf, n), errno);
+	errno = 0;
+	printf("%lu %d\n", ft_write(fd, buf, n), errno);
 }
 
 void	test_ft_strcmp(void)
