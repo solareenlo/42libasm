@@ -17,7 +17,7 @@
 %else
 	%define	FT_READ		ft_read
 	%define ERROR		__errno_location
-	%define READ		3
+	%define READ		0
 %endif
 
 			global	FT_READ
@@ -26,11 +26,23 @@
 FT_READ:
 			mov		rax, READ
 			syscall
+%ifdef MACOS
 			jc		.error
+%else
+			cmp		rax, 0
+			jl		.error
+%endif
 			ret
 .error:
+%ifndef MACOS
+			neg		rax
+%endif
 			push	rax
+%ifdef MACOS
 			call	ERROR
+%else
+			call	ERROR wrt ..plt
+%endif
 			pop		qword [rax]
 			mov		rax, -1
 			ret

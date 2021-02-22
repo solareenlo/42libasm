@@ -26,11 +26,23 @@
 FT_WRITE:
 			mov		rax, WRITE
 			syscall
+%ifdef MACOS
 			jc		.error
+%else
+			cmp		rax, 0
+			jl		.error
+%endif
 			ret
 .error:
+%ifndef MACOS
+			neg		rax
+%endif
 			push	rax
+%ifdef MACOS
 			call	ERROR
+%else
+			call	ERROR wrt ..plt
+%endif
 			pop		qword [rax]
 			mov		rax, -1
 			ret

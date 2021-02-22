@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/23 01:17:56 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/23 04:12:41 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
+#include <fcntl.h>
 #include <errno.h>
 #include "libasm.h"
 
@@ -30,6 +31,8 @@ void	test_ft_strcmp(void);
 void	check_ft_strcmp(char *s1, char *s2);
 void	test_ft_write(void);
 void	check_ft_write(int fd, const void *buf, size_t n);
+void	test_ft_read(void);
+void	check_ft_read(char *filename, size_t n);
 char	*long_char(size_t size, char c);
 
 int		main(void)
@@ -38,11 +41,61 @@ int		main(void)
 	test_ft_strcpy();
 	test_ft_strcmp();
 	test_ft_write();
+	test_ft_read();
 	return (0);
+}
+
+void	test_ft_read(void)
+{
+	printf("%sCheck%s ft_read\n", GREEN, RESET);
+	check_ft_read("a.txt", 10);
+	check_ft_read("b.txt", 10);
+	check_ft_read(NULL, 10);
+	check_ft_read("", 10);
+	check_ft_read("a.txt", 0);
+	check_ft_read("b.txt", 0);
+	check_ft_read(NULL, 0);
+	check_ft_read("", 0);
+	check_ft_read("a.txt", -1);
+	check_ft_read("b.txt", -1);
+	check_ft_read(NULL, -1);
+	check_ft_read("", -1);
+	check_ft_read("a.txt", 1024);
+	check_ft_read("b.txt", 1024);
+	check_ft_read(NULL, 1024);
+	check_ft_read("", 1024);
+}
+
+void	check_ft_read(char *filename, size_t n)
+{
+	char	buf[2][1024];
+	int		fd;
+	int		ft_errno[2];
+	ssize_t	ret[2];
+
+	bzero(buf, sizeof(buf));
+	fd = open(filename, O_RDONLY);
+	errno = 0;
+	ret[1] = ft_read(fd, buf[1], n);
+	ft_errno[1] = errno;
+	close(fd);
+	fd = open(filename, O_RDONLY);
+	errno = 0;
+	ret[0] = read(fd, buf[0], n);
+	ft_errno[0] = errno;
+	close(fd);
+	if (ret[0] == ret[1] && ft_errno[0] == ft_errno[1] && strcmp(buf[0], buf[1]) == 0)
+		printf("%sOK%s [%s] [%s] [%lu] [%lu] [%d]\n",
+				GREEN, RESET, filename, buf[0], n, ret[0], ft_errno[0]);
+	else
+		printf("%sNG%s [%s] [%s] [%lu] [%lu] [%d]\n",
+				RED, RESET, filename, buf[0], n, ret[0], ft_errno[1]);
 }
 
 void	test_ft_write(void)
 {
+	char	*s;
+
 	printf("%sCheck%s ft_write\n", GREEN, RESET);
 	check_ft_write(-1, "[abc] ", 7);
 	check_ft_write(0, "[abc] ", 7);
@@ -50,6 +103,7 @@ void	test_ft_write(void)
 	check_ft_write(1, "[abc] ", -1);
 	check_ft_write(1, NULL, 1);
 	check_ft_write(1, NULL, -1);
+	check_ft_write(-1, NULL, -1);
 	check_ft_write(1, "[abc] ", 7);
 	check_ft_write(1, "[\0a\0] ", 7);
 	check_ft_write(1, "[\0\0\0] ", 7);
@@ -61,15 +115,18 @@ void	test_ft_write(void)
 	check_ft_write(3, "[abc] ", 7);
 	check_ft_write(INT_MAX, "[abc] ", 7);
 	check_ft_write(INT_MIN, "[abc] ", 7);
-	check_ft_write(1, long_char(100, 'A'), 100);
+	check_ft_write(1, s = long_char(100, 'A'), 100);
+	free(s);
 }
 
 void	check_ft_write(int fd, const void *buf, size_t n)
 {
 	errno = 0;
-	printf("%lu %d\n", write(fd, buf, n), errno);
+	printf("[%lu] ", write(fd, buf, n));
+	printf("[%d]\n", errno);
 	errno = 0;
-	printf("%lu %d\n", ft_write(fd, buf, n), errno);
+	printf("[%lu] ", ft_write(fd, buf, n));
+	printf("[%d]\n", errno);
 }
 
 void	test_ft_strcmp(void)
