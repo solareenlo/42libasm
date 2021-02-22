@@ -1,6 +1,13 @@
 # libasm
 
-## syscall number
+## Syscall
+### syscall rapper
+- errno.h に errno の一覧がある．
+- syscall に失敗すると，syscall_error 関数が働いて，errno と同じ値が rax に入ってくる．
+- syscall の失敗の ret に errno が入っているのを ret を -1 にするラッパー関数が働いて，移植性を高められるようにしている．
+- Reference: [Linuxカーネルに見る、システムコール番号と引数、システムコール・ラッパーとは](https://www.atmarkit.co.jp/ait/articles/1703/01/news172_2.html)
+
+### syscall number
 - sys/syscall.h に記載されている．
   - References: [syscall.h](https://opensource.apple.com/source/xnu/xnu-792/bsd/sys/syscall.h.auto.html), [x86 Linux の 32bit と 64bit のシステムコールの違い](https://www.mztn.org/lxasm64/x86_x64_table.html)
 - mac は，syscall_sw.h で，syscall number を6種類のバージョンへと使い分けている．
@@ -96,4 +103,3 @@ mov rax, [rdx + 8*rcx + 42]
 - システムコール命令は，rcx と r11 の値を書き換える．
   - 理由は，後ほど．
 - 関数のリターン値は，rax に入ってる．
-
