@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/23 13:39:55 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/23 14:03:16 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	*long_char(size_t size, char c)
 	s[--size] = '\0';
 	while (--size)
 		s[size] = c;
+	s[0] = c;
 	return (s);
 }
 
