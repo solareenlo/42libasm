@@ -1,10 +1,10 @@
-# Makefile for libasm, updated Mon Feb 22 16:08:46 JST 2021
+# Makefile for libasm, updated Tue Feb 23 12:34:27 JST 2021
 
 SRC := ft_list_size.s ft_read.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_strlen.s ft_write.s
 
 OBJ := ft_list_size.o ft_read.o ft_strcmp.o ft_strcpy.o ft_strdup.o ft_strlen.o ft_write.o
 
-HDR := libasm.h
+HDR := libasm.h libasm_bonus.h
 
 # DO NOT ADD OR MODIFY ANY LINES ABOVE THIS -- run 'make source' to add files
 
@@ -42,6 +42,10 @@ re: fclean all
 
 test: re
 	$(CC) main.c $(NAME)
+	./a.out
+
+test_bonus: re
+	$(CC) main_bonus.c $(NAME)
 	./a.out
 
 bonus: all

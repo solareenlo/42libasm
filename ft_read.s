@@ -10,6 +10,8 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
+; ssize_t	ft_read(int fildes, void *buf, size_t nbyte);
+
 %ifdef MACOS
 	%define FT_READ		_ft_read
 	%define ERROR		___error

@@ -10,6 +10,8 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
+; char	*ft_strcpy(char *dst, const char *src);
+
 %ifdef MACOS
 	%define FT_STRCPY	_ft_strcpy
 %else

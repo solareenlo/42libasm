@@ -10,6 +10,8 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
+; size_t	ft_strlen(const char *s);
+
 %ifdef MACOS
 	%define FT_STRLEN	_ft_strlen
 %else

@@ -10,6 +10,8 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
+; int		ft_strcmp(const char *s1, const char *s2);
+
 %ifdef MACOS
 	%define FT_STRCMP	_ft_strcmp
 %else

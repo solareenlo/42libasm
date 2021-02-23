@@ -10,6 +10,8 @@
 ;                                                                              ;
 ; **************************************************************************** ;
 
+; ssize_t	ft_write(int fildes, const void *buf, size_t nbyte);
+
 %ifdef MACOS
 	%define FT_WRITE	_ft_write
 	%define WRITE		0x02000004
