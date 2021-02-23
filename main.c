@@ -6,7 +6,7 @@
 /*   By: tayamamo <tayamamo@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 15:01:09 by tayamamo          #+#    #+#             */
-/*   Updated: 2021/02/23 05:10:48 by tayamamo         ###   ########.fr       */
+/*   Updated: 2021/02/23 13:39:55 by tayamamo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	test_ft_strdup(void)
 	check_ft_strdup("\0\0\0");
 	check_ft_strdup("\0a\0");
 	check_ft_strdup("a\0a\0");
+	write(1, "\n", 1);
 }
 
 void	check_ft_read(char *filename, size_t n)
@@ -114,6 +115,7 @@ void	test_ft_read(void)
 	check_ft_read("b.txt", 1024);
 	check_ft_read(NULL, 1024);
 	check_ft_read("", 1024);
+	write(1, "\n", 1);
 }
 
 void	check_ft_write(int fd, const void *buf, size_t n)
@@ -151,6 +153,7 @@ void	test_ft_write(void)
 	check_ft_write(INT_MIN, "[abc] ", 7);
 	check_ft_write(1, s = long_char(100, 'A'), 100);
 	free(s);
+	write(1, "\n", 1);
 }
 
 void	check_ft_strcmp(char *s1, char *s2)

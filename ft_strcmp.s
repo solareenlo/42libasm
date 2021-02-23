@@ -34,4 +34,10 @@ FT_STRCMP:
 			movzx	rax, byte [rdi]
 			movzx	rcx, byte [rsi]
 			sub		rax, rcx
+			cmp		rax, 0
+			jl		.less
+			mov		rax, 1
+			ret
+.less:
+			mov		rax, -1
 			ret
