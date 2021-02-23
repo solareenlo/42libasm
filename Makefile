@@ -37,7 +37,7 @@ $(NAME): $(OBJ)
 	$(AR) $@ $^
 
 clean:
-	$(RM) Makefile.bak $(OBJ) a.out
+	$(RM) Makefile.bak $(OBJ) $(OBJ_BONUS) a.out
 
 fclean: clean
 	$(RM) $(NAME)
@@ -48,11 +48,12 @@ test: re
 	$(CC) main.c $(NAME)
 	./a.out
 
-test_bonus: re
+test_bonus: bonus
 	$(CC) main_bonus.c $(NAME)
 	./a.out
 
-bonus: all
+bonus: $(NAME) $(OBJ_BONUS)
+	$(AR) $(NAME) $(OBJ_BONUS)
 
 source:
 	@mv Makefile Makefile.bak
